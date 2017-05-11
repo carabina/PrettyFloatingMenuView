@@ -9,7 +9,7 @@
 import UIKit
 
 // MARK: - PrettyFloatingMenuItemView
-class PrettyFloatingMenuItemView: UIStackView {
+open class PrettyFloatingMenuItemView: UIStackView {
     
     // MARK: - Internal Properties
     var titleLabel: UILabel?
@@ -51,7 +51,7 @@ class PrettyFloatingMenuItemView: UIStackView {
         addArrangedSubview(iconImageView!)
     }
     
-    required init(coder: NSCoder) {
+    required public init(coder: NSCoder) {
         super.init(coder: coder)
     }
 }

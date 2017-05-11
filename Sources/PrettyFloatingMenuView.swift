@@ -22,11 +22,23 @@ open class PrettyFloatingMenuView: UIView {
         }
     }
     
+    open var closingAfterTapOnEmptySpace: Bool = true
+    
+    open var closingAfterTapOnMenuItem: Bool = true
+
+    open var animator: PrettyFloatingMenuAnimator? = nil
+    
     open private(set) var state: PrettyFloatingMenuState = .closed
     
     // MARK: - Private Properties
     private var anchorPoint: CGPoint {
         return center
+    }
+    
+    private var itemViews: [PrettyFloatingMenuItemView] {
+        return subviews.filter({ (view) -> Bool in
+            return view is PrettyFloatingMenuItemView
+        }) as! [PrettyFloatingMenuItemView]
     }
     
     // MARK: - UIView
@@ -50,11 +62,25 @@ open class PrettyFloatingMenuView: UIView {
         }
         
         if touchView == self, bounds.contains(touch.location(in: self)) == true {
-            //Tap to oneself
+            //Tap on oneself
             toggle()
-        } else if let subviewIndex = subviews.index(of: touchView) {
-            //Tap on subview
-            print(subviewIndex)
+        } else {
+            let itemSubviews = subviews.filter({ (view) -> Bool in
+                return view is PrettyFloatingMenuItemView
+            })
+            
+            if let itemSubviewIndex = itemSubviews.index(of: touchView), let item = items?[itemSubviewIndex] {
+                //Tap on item view
+                item.action?(item)
+                
+                //Close if need
+                if closingAfterTapOnMenuItem == true {
+                    close()
+                }
+            } else if closingAfterTapOnEmptySpace == true {
+                //Close menu after tap on empty space
+                close()
+            }
         }
     }
     
@@ -77,6 +103,7 @@ open class PrettyFloatingMenuView: UIView {
             view.removeFromSuperview()
         }
         
+        //Add views
         items?.forEach({ (item) in
             let itemView = PrettyFloatingMenuItemView(item: item)
             self.addSubview(itemView)
@@ -84,12 +111,27 @@ open class PrettyFloatingMenuView: UIView {
     }
     
     private func toggle() {
-        if state == .closed {
-            state = .open
-        } else {
-            state = .closed
+        switch state {
+        case .closed:
+            open()
+        case .open:
+            close()
         }
+    }
+    
+    private func open() {
+        state = .open
         
         updateOverlayView()
+        
+        animator?.openMenuAnimation(itemViews)
+    }
+    
+    private func close() {
+        state = .closed
+        
+        updateOverlayView()
+        
+        animator?.closeMenuAnimation(itemViews)
     }
 }

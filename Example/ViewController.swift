@@ -26,16 +26,26 @@ class ViewController: UIViewController {
         let firstItem = PrettyFloatingMenuItem()
         firstItem.attributedTitle = NSAttributedString(string: "Test Item 1")
         firstItem.iconImage = UIImage(named: "community-icon")
-
+        firstItem.action = { (item) in
+            print(item.attributedTitle!.string)
+        }
+        
         let secondItem = PrettyFloatingMenuItem()
         secondItem.attributedTitle = NSAttributedString(string: "Test Item 2")
         secondItem.iconImage = UIImage(named: "trophy-icon")
+        secondItem.action = { (item) in
+            print(item.attributedTitle!.string)
+        }
         
         let thirdItem = PrettyFloatingMenuItem()
         thirdItem.attributedTitle = NSAttributedString(string: "Test Item 3")
         thirdItem.iconImage = UIImage(named: "alert-icon")
+        thirdItem.action = { (item) in
+            print(item.attributedTitle!.string)
+        }
         
         menuView.items = [firstItem, secondItem, thirdItem]
+        menuView.animator = PrettyFloatingMenuSlideUpAnimator()
     }
 }
 
