@@ -1,3 +1,4 @@
+
 //
 //  PrettyFloatingMenuView.swift
 //  PrettyFloatingMenuView
@@ -16,7 +17,7 @@ public enum PrettyFloatingMenuState {
 open class PrettyFloatingMenuView: UIView {
     
     // MARK: - Public Properties
-    open var items: [PrettyFloatingMenuItem]? {
+    open var itemViews: [PrettyFloatingMenuItemView]? {
         didSet {
             updateSubviews()
         }
@@ -32,10 +33,10 @@ open class PrettyFloatingMenuView: UIView {
     
     // MARK: - Private Properties
     private var anchorPoint: CGPoint {
-        return center
+        return CGPoint(x: bounds.midX, y: bounds.midY)
     }
     
-    private var itemViews: [PrettyFloatingMenuItemView] {
+    private var presentedItemViews: [PrettyFloatingMenuItemView] {
         return subviews.filter({ (view) -> Bool in
             return view is PrettyFloatingMenuItemView
         }) as! [PrettyFloatingMenuItemView]
@@ -47,6 +48,19 @@ open class PrettyFloatingMenuView: UIView {
         
         updateOverlayView()
         updateSubviews()
+    }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        UIView.setAnimationsEnabled(false)
+        switch state {
+        case .open:
+            open()
+        case .closed:
+            close()
+        }
+        UIView.setAnimationsEnabled(true)
     }
     
     // MARK: - UIResponder
@@ -62,34 +76,43 @@ open class PrettyFloatingMenuView: UIView {
         }
         
         if touchView == self, bounds.contains(touch.location(in: self)) == true {
-            //Tap on oneself
+            //Detected tap on oneself
             toggle()
-        } else {
-            let itemSubviews = subviews.filter({ (view) -> Bool in
-                return view is PrettyFloatingMenuItemView
-            })
+        } else if let itemView = touchView as? PrettyFloatingMenuItemView {
+            //Detected tn item view
+            itemView.action?(itemView)
             
-            if let itemSubviewIndex = itemSubviews.index(of: touchView), let item = items?[itemSubviewIndex] {
-                //Tap on item view
-                item.action?(item)
-                
-                //Close if need
-                if closingAfterTapOnMenuItem == true {
-                    close()
-                }
-            } else if closingAfterTapOnEmptySpace == true {
-                //Close menu after tap on empty space
+            //Close if need
+            if closingAfterTapOnMenuItem == true {
                 close()
             }
         }
     }
     
-    open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        return true
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        for itemView in subviews {
+            let itemViewPoint = itemView.convert(point, from: self)
+            if itemView.bounds.contains(itemViewPoint) {
+                return itemView.hitTest(itemViewPoint, with: event)
+            }
+        }
+        
+        let view = super.hitTest(point, with: event)
+        
+        if view == nil, state == .open, closingAfterTapOnEmptySpace == true {
+            //Close menu after tap on empty space
+            close()
+        }
+        
+        return view
     }
+
     
     // MARK: - Private Instance Methods
     private func updateOverlayView() {
+        clipsToBounds = false
+        backgroundColor = UIColor.clear
+        
         if state == .closed {
             backgroundColor = UIColor.blue
         } else {
@@ -99,13 +122,12 @@ open class PrettyFloatingMenuView: UIView {
     
     private func updateSubviews() {
         //Remove subviews
-        subviews.forEach { (view) in
-            view.removeFromSuperview()
+        presentedItemViews.forEach { (itemView) in
+            itemView.removeFromSuperview()
         }
         
         //Add views
-        items?.forEach({ (item) in
-            let itemView = PrettyFloatingMenuItemView(item: item)
+        itemViews?.forEach({ (itemView) in
             self.addSubview(itemView)
         })
     }
@@ -124,7 +146,16 @@ open class PrettyFloatingMenuView: UIView {
         
         updateOverlayView()
         
-        animator?.openMenuAnimation(itemViews)
+        guard let animator = animator, let itemViews = itemViews else {
+            return
+        }
+        
+        //Disable touches on items
+        itemViews.forEach { (itemView) in
+            itemView.isHidden = false
+        }
+        
+        animator.openMenuAnimation(itemViews, anchorPoint: anchorPoint)
     }
     
     private func close() {
@@ -132,6 +163,15 @@ open class PrettyFloatingMenuView: UIView {
         
         updateOverlayView()
         
-        animator?.closeMenuAnimation(itemViews)
+        guard let animator = animator, let itemViews = itemViews else {
+            return
+        }
+
+        //Enable touches on items
+        itemViews.forEach { (itemView) in
+            itemView.isHidden = true
+        }
+        
+        animator.closeMenuAnimation(itemViews, anchorPoint: anchorPoint)
     }
 }

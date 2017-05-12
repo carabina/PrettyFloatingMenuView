@@ -10,6 +10,6 @@ import Foundation
 
 public protocol PrettyFloatingMenuAnimator {
     
-    func openMenuAnimation(_ itemViews: [PrettyFloatingMenuItemView])
-    func closeMenuAnimation(_ itemViews: [PrettyFloatingMenuItemView])
+    func openMenuAnimation(_ itemViews: [PrettyFloatingMenuItemView], anchorPoint: CGPoint)
+    func closeMenuAnimation(_ itemViews: [PrettyFloatingMenuItemView], anchorPoint: CGPoint)
 }

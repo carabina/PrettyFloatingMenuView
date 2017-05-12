@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,8 +22,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jsk-cu-R6b" customClass="PrettyFloatingMenuView" customModule="PrettyFloatingMenuView">
+                                <rect key="frame" x="299" y="587" width="60" height="60"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="ehW-si-fHI"/>
+                                    <constraint firstAttribute="width" constant="60" id="sJA-8z-6Gr"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBH-BY-O1w" customClass="PrettyFloatingMenuView" customModule="PrettyFloatingMenuView">
-                                <rect key="frame" x="158" y="304" width="60" height="60"/>
+                                <rect key="frame" x="189" y="587" width="60" height="60"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="RFq-UX-uU0"/>
@@ -32,12 +41,15 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="oBH-BY-O1w" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JWK-j1-UkF"/>
-                            <constraint firstItem="oBH-BY-O1w" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cDX-0N-vh7"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="oBH-BY-O1w" secondAttribute="bottom" constant="20" id="DqR-6d-Yxw"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jsk-cu-R6b" secondAttribute="bottom" constant="20" id="FAd-LI-tAq"/>
+                            <constraint firstItem="Jsk-cu-R6b" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="KOa-RA-flQ"/>
+                            <constraint firstItem="Jsk-cu-R6b" firstAttribute="leading" secondItem="oBH-BY-O1w" secondAttribute="trailing" constant="50" id="Op0-Ws-54D"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="menuView" destination="oBH-BY-O1w" id="rVw-zW-j87"/>
+                        <outlet property="menuView" destination="Jsk-cu-R6b" id="d3h-2y-WcJ"/>
+                        <outlet property="roundMenuView" destination="oBH-BY-O1w" id="vRT-2p-0py"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

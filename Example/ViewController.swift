@@ -13,39 +13,68 @@ class ViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var menuView: PrettyFloatingMenuView!
+    @IBOutlet weak var roundMenuView: PrettyFloatingMenuView!
 
     // MARK: - UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        prepareRoundMenuView()
         prepareMenuView()
     }
 
     // MARK: - Private Instance Methods
     private func prepareMenuView() {
-        let firstItem = PrettyFloatingMenuItem()
-        firstItem.attributedTitle = NSAttributedString(string: "Test Item 1")
-        firstItem.iconImage = UIImage(named: "community-icon")
-        firstItem.action = { (item) in
+        let firstItemView = PrettyFloatingMenuItemView()
+        firstItemView.attributedTitle = NSAttributedString(string: "Test Item 1")
+        firstItemView.iconImage = UIImage(named: "community-icon")
+        firstItemView.action = { (item) in
             print(item.attributedTitle!.string)
         }
         
-        let secondItem = PrettyFloatingMenuItem()
-        secondItem.attributedTitle = NSAttributedString(string: "Test Item 2")
-        secondItem.iconImage = UIImage(named: "trophy-icon")
-        secondItem.action = { (item) in
+        let secondItemView = PrettyFloatingMenuItemView()
+        secondItemView.attributedTitle = NSAttributedString(string: "Test Item 2")
+        secondItemView.iconImage = UIImage(named: "trophy-icon")
+        secondItemView.action = { (item) in
             print(item.attributedTitle!.string)
         }
         
-        let thirdItem = PrettyFloatingMenuItem()
-        thirdItem.attributedTitle = NSAttributedString(string: "Test Item 3")
-        thirdItem.iconImage = UIImage(named: "alert-icon")
-        thirdItem.action = { (item) in
+        let thirdItemView = PrettyFloatingMenuItemView()
+        thirdItemView.attributedTitle = NSAttributedString(string: "Test Item 3")
+        thirdItemView.iconImage = UIImage(named: "alert-icon")
+        thirdItemView.action = { (item) in
             print(item.attributedTitle!.string)
         }
         
-        menuView.items = [firstItem, secondItem, thirdItem]
+        menuView.itemViews = [firstItemView, secondItemView, thirdItemView]
         menuView.animator = PrettyFloatingMenuSlideUpAnimator()
     }
+    
+    private func prepareRoundMenuView() {
+        let firstItemView = PrettyFloatingMenuItemView()
+        firstItemView.attributedTitle = NSAttributedString(string: "Test Item 1")
+        firstItemView.iconImage = UIImage(named: "community-icon")
+        firstItemView.action = { (item) in
+            print(item.attributedTitle!.string)
+        }
+        
+        let secondItemView = PrettyFloatingMenuItemView()
+        secondItemView.attributedTitle = NSAttributedString(string: "Test Item 2")
+        secondItemView.iconImage = UIImage(named: "trophy-icon")
+        secondItemView.action = { (item) in
+            print(item.attributedTitle!.string)
+        }
+        
+        let thirdItemView = PrettyFloatingMenuItemView()
+        thirdItemView.attributedTitle = NSAttributedString(string: "Test Item 3")
+        thirdItemView.iconImage = UIImage(named: "alert-icon")
+        thirdItemView.action = { (item) in
+            print(item.attributedTitle!.string)
+        }
+        
+        roundMenuView.itemViews = [firstItemView, secondItemView, thirdItemView]
+        roundMenuView.animator = PrettyFloatingMenuRoundSlideAnimator()
+    }
+
 }
 

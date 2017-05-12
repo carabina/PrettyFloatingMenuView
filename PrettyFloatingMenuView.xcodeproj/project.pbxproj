@@ -18,8 +18,8 @@
 		1BFB02571EC4DC1A00C65173 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BFB02561EC4DC1A00C65173 /* Assets.xcassets */; };
 		1BFB025A1EC4DC1A00C65173 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BFB02581EC4DC1A00C65173 /* LaunchScreen.storyboard */; };
 		1BFB02601EC4DC3300C65173 /* PrettyFloatingMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFB025F1EC4DC3300C65173 /* PrettyFloatingMenuView.swift */; };
-		1BFB02621EC4DC4F00C65173 /* PrettyFloatingMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFB02611EC4DC4F00C65173 /* PrettyFloatingMenuItem.swift */; };
 		1BFB02641EC4DC6200C65173 /* PrettyFloatingMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFB02631EC4DC6200C65173 /* PrettyFloatingMenuItemView.swift */; };
+		1BFF47481EC5E2D300D983E2 /* PrettyFloatingMenuRoundSlideAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF47471EC5E2D300D983E2 /* PrettyFloatingMenuRoundSlideAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,8 +60,8 @@
 		1BFB02591EC4DC1A00C65173 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1BFB025B1EC4DC1A00C65173 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BFB025F1EC4DC3300C65173 /* PrettyFloatingMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyFloatingMenuView.swift; sourceTree = "<group>"; };
-		1BFB02611EC4DC4F00C65173 /* PrettyFloatingMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyFloatingMenuItem.swift; sourceTree = "<group>"; };
 		1BFB02631EC4DC6200C65173 /* PrettyFloatingMenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyFloatingMenuItemView.swift; sourceTree = "<group>"; };
+		1BFF47471EC5E2D300D983E2 /* PrettyFloatingMenuRoundSlideAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyFloatingMenuRoundSlideAnimator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,10 +107,10 @@
 				1BFB02451EC4DBC600C65173 /* Info.plist */,
 				1BFB02461EC4DBC600C65173 /* PrettyFloatingMenuView.h */,
 				1BFB025F1EC4DC3300C65173 /* PrettyFloatingMenuView.swift */,
-				1BFB02611EC4DC4F00C65173 /* PrettyFloatingMenuItem.swift */,
 				1BFB02631EC4DC6200C65173 /* PrettyFloatingMenuItemView.swift */,
 				1B9EE21D1EC501AE0033B0A3 /* PrettyFloatingMenuAnimator.swift */,
 				1B9EE21F1EC507EC0033B0A3 /* PrettyFloatingMenuSlideUpAnimator.swift */,
+				1BFF47471EC5E2D300D983E2 /* PrettyFloatingMenuRoundSlideAnimator.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -247,8 +247,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BFB02601EC4DC3300C65173 /* PrettyFloatingMenuView.swift in Sources */,
-				1BFB02621EC4DC4F00C65173 /* PrettyFloatingMenuItem.swift in Sources */,
 				1B9EE21E1EC501AE0033B0A3 /* PrettyFloatingMenuAnimator.swift in Sources */,
+				1BFF47481EC5E2D300D983E2 /* PrettyFloatingMenuRoundSlideAnimator.swift in Sources */,
 				1BFB02641EC4DC6200C65173 /* PrettyFloatingMenuItemView.swift in Sources */,
 				1B9EE2201EC507EC0033B0A3 /* PrettyFloatingMenuSlideUpAnimator.swift in Sources */,
 			);
