@@ -42,7 +42,7 @@ open class PrettyFloatingMenuSlideUpAnimator: PrettyFloatingMenuAnimator {
     }
     
     open func closeMenuAnimation(_ itemViews: [PrettyFloatingMenuItemView], anchorPoint: CGPoint) {
-        var delay = 0.0
+        var delay: TimeInterval = 0
         
         itemViews.reversed().forEach { (itemView) in
            UIView.animate(withDuration: 0.15, delay: delay, options: [], animations: { () -> Void in

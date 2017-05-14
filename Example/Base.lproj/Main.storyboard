@@ -38,13 +38,27 @@
                                     <constraint firstAttribute="width" constant="60" id="c6f-cs-gVR"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OhK-E0-QEy">
+                                <rect key="frame" x="163" y="303" width="49" height="61"/>
+                                <subviews>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bCU-xl-cQE">
+                                        <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                    </switch>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gg-fY-UJz">
+                                        <rect key="frame" x="0.0" y="31" width="49" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="oBH-BY-O1w" secondAttribute="bottom" constant="20" id="DqR-6d-Yxw"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jsk-cu-R6b" secondAttribute="bottom" constant="20" id="FAd-LI-tAq"/>
                             <constraint firstItem="Jsk-cu-R6b" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="KOa-RA-flQ"/>
+                            <constraint firstItem="OhK-E0-QEy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MpL-07-SBY"/>
                             <constraint firstItem="Jsk-cu-R6b" firstAttribute="leading" secondItem="oBH-BY-O1w" secondAttribute="trailing" constant="50" id="Op0-Ws-54D"/>
+                            <constraint firstItem="OhK-E0-QEy" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="bDh-4S-6Jh"/>
                         </constraints>
                     </view>
                     <connections>

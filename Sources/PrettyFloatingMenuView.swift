@@ -9,11 +9,13 @@
 
 import UIKit
 
+// MARK: - PrettyFloatingMenuState
 public enum PrettyFloatingMenuState {
     case closed
-    case open
+    case opened
 }
 
+// MARK: - PrettyFloatingMenuView
 open class PrettyFloatingMenuView: UIView {
     
     // MARK: - Public Properties
@@ -32,6 +34,36 @@ open class PrettyFloatingMenuView: UIView {
     open private(set) var state: PrettyFloatingMenuState = .closed
     
     // MARK: - Private Properties
+    private lazy var menuButtonImageView: UIImageView = {
+        let imageView = UIImageView(frame: self.bounds)
+        self.addSubview(imageView)
+
+        imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        imageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
+        imageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1).isActive = true
+        
+        return imageView
+    }()
+    
+    private lazy var overlayView: UIView = {
+        let view = UIView(frame: self.bounds)
+        self.addSubview(view)
+        
+//        view.centerXAnchor.constraint(equalTo: self.superview!.centerXAnchor).isActive = true
+//        view.centerYAnchor.constraint(equalTo: self.superview!.centerYAnchor).isActive = true
+//        view.widthAnchor.constraint(equalTo: self.superview!.widthAnchor, multiplier: 1).isActive = true
+//        view.heightAnchor.constraint(equalTo: self.superview!.heightAnchor, multiplier: 1).isActive = true
+        
+        return view
+    }()
+    
+    private var menuImages: [PrettyFloatingMenuState: UIImage?] = [:]
+    
+    private var menuBackgroundColors: [PrettyFloatingMenuState: UIColor?] = [:]
+
+    private var overlayColors: [PrettyFloatingMenuState: UIColor?] = [:]
+    
     private var anchorPoint: CGPoint {
         return CGPoint(x: bounds.midX, y: bounds.midY)
     }
@@ -46,6 +78,7 @@ open class PrettyFloatingMenuView: UIView {
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         
+        updateMenuButtonImageView()
         updateOverlayView()
         updateSubviews()
     }
@@ -55,7 +88,7 @@ open class PrettyFloatingMenuView: UIView {
         
         UIView.setAnimationsEnabled(false)
         switch state {
-        case .open:
+        case .opened:
             open()
         case .closed:
             close()
@@ -90,6 +123,10 @@ open class PrettyFloatingMenuView: UIView {
     }
     
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if bounds.contains(point) {
+            return self
+        }
+        
         for itemView in subviews {
             let itemViewPoint = itemView.convert(point, from: self)
             if itemView.bounds.contains(itemViewPoint) {
@@ -97,27 +134,59 @@ open class PrettyFloatingMenuView: UIView {
             }
         }
         
-        let view = super.hitTest(point, with: event)
-        
-        if view == nil, state == .open, closingAfterTapOnEmptySpace == true {
+        if state == .opened, closingAfterTapOnEmptySpace == true {
             //Close menu after tap on empty space
             close()
         }
         
-        return view
+        return super.hitTest(point, with: event)
     }
-
+    
+    // MARK: - Public Instance Methods
+    open func setImage(_ image: UIImage?, forState state: PrettyFloatingMenuState) {
+        menuImages[state] = image
+        
+        updateMenuButtonImageView()
+    }
+    
+    open func setBackgroundColor(_ color: UIColor?, forState state: PrettyFloatingMenuState) {
+        menuBackgroundColors[state] = color
+        
+        updateMenuButtonImageView()
+    }
+    
+    open func setOverlayColor(_ color: UIColor?, forState state: PrettyFloatingMenuState) {
+        overlayColors[state] = color
+        
+        updateOverlayView()
+    }
+    
     
     // MARK: - Private Instance Methods
-    private func updateOverlayView() {
+    private func updateMenuButtonImageView() {
         clipsToBounds = false
         backgroundColor = UIColor.clear
         
-        if state == .closed {
-            backgroundColor = UIColor.blue
-        } else {
-            backgroundColor = UIColor.green
+        menuButtonImageView.image = menuImages[state] ?? nil
+        
+        menuButtonImageView.backgroundColor = menuBackgroundColors[state] ?? nil
+    }
+    
+    private func updateOverlayView() {
+        sendSubview(toBack: overlayView)
+        
+        switch state {
+        case .closed:
+            overlayView.frame = CGRect()
+        case .opened:
+            guard let superview = superview else {
+                return
+            }
+            
+            overlayView.frame = superview.convert(superview.frame, to: self)
         }
+
+        overlayView.backgroundColor = overlayColors[state] ?? nil
     }
     
     private func updateSubviews() {
@@ -136,14 +205,15 @@ open class PrettyFloatingMenuView: UIView {
         switch state {
         case .closed:
             open()
-        case .open:
+        case .opened:
             close()
         }
     }
     
     private func open() {
-        state = .open
+        state = .opened
         
+        updateMenuButtonImageView()
         updateOverlayView()
         
         guard let animator = animator, let itemViews = itemViews else {
@@ -152,7 +222,7 @@ open class PrettyFloatingMenuView: UIView {
         
         //Disable touches on items
         itemViews.forEach { (itemView) in
-            itemView.isHidden = false
+            itemView.isUserInteractionEnabled = true
         }
         
         animator.openMenuAnimation(itemViews, anchorPoint: anchorPoint)
@@ -161,6 +231,7 @@ open class PrettyFloatingMenuView: UIView {
     private func close() {
         state = .closed
         
+        updateMenuButtonImageView()
         updateOverlayView()
         
         guard let animator = animator, let itemViews = itemViews else {
@@ -169,7 +240,7 @@ open class PrettyFloatingMenuView: UIView {
 
         //Enable touches on items
         itemViews.forEach { (itemView) in
-            itemView.isHidden = true
+            itemView.isUserInteractionEnabled = false
         }
         
         animator.closeMenuAnimation(itemViews, anchorPoint: anchorPoint)

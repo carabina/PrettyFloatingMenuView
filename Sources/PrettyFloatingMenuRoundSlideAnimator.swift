@@ -9,7 +9,7 @@
 open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
     
     // MARK: - Public Properties
-    let radius: CGFloat = 100
+    open var radius: CGFloat = 100
 
     open var animationSpeed: Double = 0.1
     
@@ -23,21 +23,16 @@ open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
 
         itemViews.enumerated().forEach { (index, itemView) in
             itemView.layer.transform = CATransform3DIdentity
+            
+            let itemSize = itemView.frame.size
 
-            if index == 0 {
-                //First item
-                degree = degreesToRadians(180.0)
-            } else if index == itemViews.count - 1 {
-                //Last item
-                degree = degreesToRadians(270.0)
-            } else {
-                degree = degreesToRadians(180 + (90.0 / CGFloat(itemViews.count-1)) * CGFloat(index))
-            }
             
-            itemView.center.x = radius * cos(degree) + anchorPoint.x
-            itemView.center.y = radius * sin(degree) + anchorPoint.y
+            degree = degreesToRadians(180 + (90.0 / CGFloat(itemViews.count - 1)) * CGFloat(index))
             
             
+            itemView.frame.origin.x = radius * cos(degree) - itemSize.width + itemView.iconSize / 2 + anchorPoint.x
+            itemView.frame.origin.y = radius * sin(degree) - itemSize.height + itemView.iconSize / 2 + anchorPoint.y
+
             itemView.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
             
             UIView.animate(withDuration: 0.3, delay: delay, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: UIViewAnimationOptions(), animations: { () -> Void in
@@ -50,7 +45,7 @@ open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
     }
     
     open func closeMenuAnimation(_ itemViews: [PrettyFloatingMenuItemView], anchorPoint: CGPoint) {
-        var delay = 0.0
+        var delay: TimeInterval = 0
         
         itemViews.reversed().forEach { (itemView) in
             UIView.animate(withDuration: 0.15, delay: delay, options: [], animations: { () -> Void in
