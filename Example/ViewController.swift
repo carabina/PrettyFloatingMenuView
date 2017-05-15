@@ -13,73 +13,60 @@ class ViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var menuView: PrettyFloatingMenuView!
-    @IBOutlet weak var roundMenuView: PrettyFloatingMenuView!
 
     // MARK: - UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareRoundMenuView()
         prepareMenuView()
     }
 
     // MARK: - Private Instance Methods
     private func prepareMenuView() {
         let firstItemView = PrettyFloatingMenuItemView()
-        firstItemView.attributedTitle = NSAttributedString(string: "Test Item 1")
+        firstItemView.title = NSAttributedString(string: "Test Item 1")
         firstItemView.iconImage = UIImage(named: "community-icon")
         firstItemView.action = { (item) in
-            print(item.attributedTitle!.string)
+            print(item.title!.string)
         }
         
         let secondItemView = PrettyFloatingMenuItemView()
-        secondItemView.attributedTitle = NSAttributedString(string: "Test Item 2")
+        secondItemView.title = NSAttributedString(string: "Test Item 2")
         secondItemView.iconImage = UIImage(named: "trophy-icon")
         secondItemView.action = { (item) in
-            print(item.attributedTitle!.string)
+            print(item.title!.string)
         }
         
         let thirdItemView = PrettyFloatingMenuItemView()
-        thirdItemView.attributedTitle = NSAttributedString(string: "Test Item 3")
+        thirdItemView.title = NSAttributedString(string: "Test Item 3")
         thirdItemView.iconImage = UIImage(named: "alert-icon")
         thirdItemView.action = { (item) in
-            print(item.attributedTitle!.string)
+            print(item.title!.string)
         }
         
-        menuView.itemViews = [firstItemView, secondItemView, thirdItemView]
+        let fourthItemView = PrettyFloatingMenuItemView()
+        fourthItemView.title = NSAttributedString(string: "Test Item 4")
+        fourthItemView.iconImage = UIImage(named: "community-icon")
+        fourthItemView.action = { (item) in
+            print(item.title!.string)
+        }
+        fourthItemView.titleVerticalPosition = .top
+        
+        let fifthItemView = PrettyFloatingMenuItemView()
+        fifthItemView.title = NSAttributedString(string: "Test Item 5")
+        fifthItemView.iconImage = UIImage(named: "trophy-icon")
+        fifthItemView.action = { (item) in
+            print(item.title!.string)
+        }
+        fifthItemView.titleVerticalPosition = .top
+        
+        menuView.itemViews = [firstItemView, secondItemView, thirdItemView, fourthItemView, fifthItemView]
         menuView.setImage(UIImage(named: "menu-icon"), forState: .closed)
         menuView.setImage(UIImage(named: "close-icon"), forState: .opened)
         menuView.setBackgroundColor(UIColor.yellow, forState: .closed)
         menuView.setBackgroundColor(UIColor.blue, forState: .opened)
         menuView.setOverlayColor(UIColor.green.withAlphaComponent(0.5), forState: .opened)
-        menuView.animator = PrettyFloatingMenuSlideUpAnimator()
+        menuView.animator = PrettyFloatingMenuRoundSlideAnimator()
     }
-    
-    private func prepareRoundMenuView() {
-        let firstItemView = PrettyFloatingMenuItemView()
-        firstItemView.attributedTitle = NSAttributedString(string: "Test Item 1")
-        firstItemView.iconImage = UIImage(named: "community-icon")
-        firstItemView.action = { (item) in
-            print(item.attributedTitle!.string)
-        }
-        
-        let secondItemView = PrettyFloatingMenuItemView()
-        secondItemView.attributedTitle = NSAttributedString(string: "Test Item 2")
-        secondItemView.iconImage = UIImage(named: "trophy-icon")
-        secondItemView.action = { (item) in
-            print(item.attributedTitle!.string)
-        }
-        
-        let thirdItemView = PrettyFloatingMenuItemView()
-        thirdItemView.attributedTitle = NSAttributedString(string: "Test Item 3")
-        thirdItemView.iconImage = UIImage(named: "alert-icon")
-        thirdItemView.action = { (item) in
-            print(item.attributedTitle!.string)
-        }
-        
-        roundMenuView.itemViews = [firstItemView, secondItemView, thirdItemView]
-        roundMenuView.animator = PrettyFloatingMenuRoundSlideAnimator()
-    }
-
 }
 

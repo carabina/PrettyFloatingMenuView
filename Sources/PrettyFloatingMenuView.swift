@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import PrettyCircleView
 
 // MARK: - PrettyFloatingMenuState
 public enum PrettyFloatingMenuState {
@@ -16,7 +17,7 @@ public enum PrettyFloatingMenuState {
 }
 
 // MARK: - PrettyFloatingMenuView
-open class PrettyFloatingMenuView: UIView {
+open class PrettyFloatingMenuView: PrettyCircleView {
     
     // MARK: - Public Properties
     open var itemViews: [PrettyFloatingMenuItemView]? {
@@ -34,27 +35,15 @@ open class PrettyFloatingMenuView: UIView {
     open private(set) var state: PrettyFloatingMenuState = .closed
     
     // MARK: - Private Properties
-    private lazy var menuButtonImageView: UIImageView = {
-        let imageView = UIImageView(frame: self.bounds)
-        self.addSubview(imageView)
-
-        imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        imageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1).isActive = true
-        
-        return imageView
+    private lazy var menuCircleView: PrettyCircleView = {
+        let circleView = PrettyCircleView(frame: self.bounds)
+        self.addSubview(circleView)
+        return circleView
     }()
     
     private lazy var overlayView: UIView = {
         let view = UIView(frame: self.bounds)
         self.addSubview(view)
-        
-//        view.centerXAnchor.constraint(equalTo: self.superview!.centerXAnchor).isActive = true
-//        view.centerYAnchor.constraint(equalTo: self.superview!.centerYAnchor).isActive = true
-//        view.widthAnchor.constraint(equalTo: self.superview!.widthAnchor, multiplier: 1).isActive = true
-//        view.heightAnchor.constraint(equalTo: self.superview!.heightAnchor, multiplier: 1).isActive = true
-        
         return view
     }()
     
@@ -97,14 +86,24 @@ open class PrettyFloatingMenuView: UIView {
     }
     
     // MARK: - UIResponder
-    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
         
-        guard let touch = touches.first, touch.tapCount == 1 else {
+        guard let touch = touches.first, touch.tapCount == 1, let touchView = touch.view else {
             return
         }
         
-        guard let touchView = touch.view else {
+        if let itemView = touchView as? PrettyFloatingMenuItemView {
+            UIView.animate(withDuration: 0.05, animations: { 
+                itemView.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1)
+            })
+        }
+    }
+    
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        
+        guard let touch = touches.first, touch.tapCount == 1, let touchView = touch.view else {
             return
         }
         
@@ -112,13 +111,30 @@ open class PrettyFloatingMenuView: UIView {
             //Detected tap on oneself
             toggle()
         } else if let itemView = touchView as? PrettyFloatingMenuItemView {
-            //Detected tn item view
-            itemView.action?(itemView)
-            
-            //Close if need
-            if closingAfterTapOnMenuItem == true {
-                close()
-            }
+            UIView.animate(withDuration: 0.05, animations: {
+                itemView.layer.transform = CATransform3DIdentity
+            }, completion: { (_) in
+                //Close if need
+                if self.closingAfterTapOnMenuItem == true {
+                    self.close()
+                }
+                
+                itemView.action?(itemView)
+            })
+        }
+    }
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesCancelled(touches, with: event)
+    }
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first, touch.tapCount == 1, let touchView = touch.view else {
+            return
+        }
+        
+        if let itemView = touchView as? PrettyFloatingMenuItemView {
+            UIView.animate(withDuration: 0.05, animations: {
+                itemView.layer.transform = CATransform3DIdentity
+            })
         }
     }
     
@@ -127,10 +143,10 @@ open class PrettyFloatingMenuView: UIView {
             return self
         }
         
-        for itemView in subviews {
+        for itemView in presentedItemViews {
             let itemViewPoint = itemView.convert(point, from: self)
             if itemView.bounds.contains(itemViewPoint) {
-                return itemView.hitTest(itemViewPoint, with: event)
+                return itemView
             }
         }
         
@@ -139,7 +155,7 @@ open class PrettyFloatingMenuView: UIView {
             close()
         }
         
-        return super.hitTest(point, with: event)
+        return nil
     }
     
     // MARK: - Public Instance Methods
@@ -167,9 +183,9 @@ open class PrettyFloatingMenuView: UIView {
         clipsToBounds = false
         backgroundColor = UIColor.clear
         
-        menuButtonImageView.image = menuImages[state] ?? nil
+        menuCircleView.contentImage = menuImages[state] ?? nil
         
-        menuButtonImageView.backgroundColor = menuBackgroundColors[state] ?? nil
+        menuCircleView.contentBackgroundColor = menuBackgroundColors[state] ?? nil
     }
     
     private func updateOverlayView() {

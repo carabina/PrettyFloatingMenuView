@@ -6,22 +6,31 @@
 //  Copyright © 2017 Oleksii Naboichenko. All rights reserved.
 //
 
-// MARK: - PrettyFloatingMenuType
-public enum PrettyFloatingMenuType {
-    case square
-    case circle
+import PrettyCircleView
+
+// MARK: - PrettyFloatingMenuItemView
+public enum PrettyFloatingMenuItemViewTitleVerticalPosition {
+    case top
+    case center
+    case bottom
 }
 
 // MARK: - PrettyFloatingMenuItemView
 open class PrettyFloatingMenuItemView: UIStackView {
     
     // MARK: - Public Properties
-    open var attributedTitle: NSAttributedString? = nil {
+    open var title: NSAttributedString? = nil {
         didSet {
             updateTitleLabel()
         }
     }
     
+    open var titleVerticalPosition: PrettyFloatingMenuItemViewTitleVerticalPosition = .center {
+        didSet {
+            updateTitleLabel()
+        }
+    }
+
     open var iconImage: UIImage? = nil {
         didSet {
             updateIconImageView()
@@ -40,9 +49,13 @@ open class PrettyFloatingMenuItemView: UIStackView {
         }
     }
 
-    open var type: PrettyFloatingMenuType = .circle  {
-        didSet {
-            updateIconImageView()
+    open var horisontalSpacing: CGFloat {
+        get {
+            return spacing
+        }
+        
+        set {
+            spacing = newValue
         }
     }
     
@@ -55,10 +68,11 @@ open class PrettyFloatingMenuItemView: UIStackView {
         return label
     }()
     
-    lazy private var iconImageView: UIImageView? = {
-        let imageView = UIImageView()
-        self.addArrangedSubview(imageView)
-        return imageView
+    lazy private var iconCircleView: PrettyCircleView? = {
+        let circleView = PrettyCircleView()
+        circleView.isUserInteractionEnabled = true
+        self.addArrangedSubview(circleView)
+        return circleView
     }()
     
     // MARK: - Initializers
@@ -81,7 +95,6 @@ open class PrettyFloatingMenuItemView: UIStackView {
     private func updateContent() {
         translatesAutoresizingMaskIntoConstraints = false
         axis = .horizontal
-        alignment = .fill
         backgroundColor = UIColor.clear
         
         updateTitleLabel()
@@ -89,34 +102,23 @@ open class PrettyFloatingMenuItemView: UIStackView {
     }
     
     private func updateIconImageView() {
-        guard let imageView = iconImageView else {
+        guard let iconCircleView = iconCircleView else {
             return
         }
         
-        //Set content mode
-        imageView.contentMode = .scaleAspectFit
-
         //Set image
-        imageView.image = iconImage
+        iconCircleView.contentImage = iconImage
         
         //Set background color
-        backgroundColor = iconBackgroundColor
-        
-        //Set corner radius
-        switch type {
-        case .circle:
-            layer.cornerRadius = iconSize / 2.0
-        case .square:
-            layer.cornerRadius = 0
-        }
+        iconCircleView.contentBackgroundColor = iconBackgroundColor
         
         //Remove old constraints
-        NSLayoutConstraint.deactivate(imageView.constraints)
+        NSLayoutConstraint.deactivate(iconCircleView.constraints)
         
         //Add new constraints
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        let widthLayoutConstraint = NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: iconSize)
-        let heightLayoutConstraint = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: iconSize)
+        iconCircleView.translatesAutoresizingMaskIntoConstraints = false
+        let widthLayoutConstraint = NSLayoutConstraint(item: iconCircleView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: iconSize)
+        let heightLayoutConstraint = NSLayoutConstraint(item: iconCircleView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: iconSize)
         NSLayoutConstraint.activate([widthLayoutConstraint, heightLayoutConstraint])
     }
     
@@ -126,6 +128,15 @@ open class PrettyFloatingMenuItemView: UIStackView {
         }
         
         //Set title
-        label.attributedText = attributedTitle
+        label.attributedText = title
+        
+        switch titleVerticalPosition {
+        case .top:
+            alignment = .firstBaseline
+        case .center:
+            alignment = .center
+        case .bottom:
+            alignment = .lastBaseline
+        }
     }
 }

@@ -9,7 +9,7 @@
 open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
     
     // MARK: - Public Properties
-    open var radius: CGFloat = 100
+    open var radius: CGFloat = 120
 
     open var animationSpeed: Double = 0.1
     
@@ -35,7 +35,7 @@ open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
 
             itemView.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
             
-            UIView.animate(withDuration: 0.3, delay: delay, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: UIViewAnimationOptions(), animations: { () -> Void in
+            UIView.animate(withDuration: 0.2, delay: delay, animations: { () -> Void in
                 itemView.alpha = 1
                 itemView.layer.transform = CATransform3DIdentity
             })
@@ -48,7 +48,7 @@ open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
         var delay: TimeInterval = 0
         
         itemViews.reversed().forEach { (itemView) in
-            UIView.animate(withDuration: 0.15, delay: delay, options: [], animations: { () -> Void in
+            UIView.animate(withDuration: 0.15, delay: delay, animations: { () -> Void in
                 itemView.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
                 itemView.alpha = 0
             }, completion: { (_) in
