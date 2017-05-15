@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
     s.license      = "MIT"
     s.author              = { "Oleksii Naboichenko" => "nab0y4enko@gmail.com" }
     s.social_media_url    = "https://twitter.com/nab0y4enko"
-    s.ios.deployment_target = '8.0'
+    s.ios.deployment_target = '9.0'
     s.source          = { :git => "https://github.com/nab0y4enko/PrettyFloatingMenuView.git", :tag => "#{s.version}" }
     s.source_files    = "Sources/**/*.swift"
     s.frameworks      = "UIKit", "CoreGraphics", "QuartzCore"
