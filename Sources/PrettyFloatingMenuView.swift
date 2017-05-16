@@ -35,12 +35,6 @@ open class PrettyFloatingMenuView: PrettyCircleView {
     open private(set) var state: PrettyFloatingMenuState = .closed
     
     // MARK: - Private Properties
-    private lazy var menuCircleView: PrettyCircleView = {
-        let circleView = PrettyCircleView(frame: self.bounds)
-        self.addSubview(circleView)
-        return circleView
-    }()
-    
     private lazy var overlayView: UIView = {
         let view = UIView(frame: self.bounds)
         self.addSubview(view)
@@ -183,9 +177,8 @@ open class PrettyFloatingMenuView: PrettyCircleView {
         clipsToBounds = false
         backgroundColor = UIColor.clear
         
-        menuCircleView.contentImage = menuImages[state] ?? nil
-        
-        menuCircleView.contentBackgroundColor = menuBackgroundColors[state] ?? nil
+        contentImage = menuImages[state] ?? nil
+        contentBackgroundColor = menuBackgroundColors[state] ?? nil
     }
     
     private func updateOverlayView() {

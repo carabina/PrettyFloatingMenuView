@@ -1,5 +1,5 @@
 PODS:
-  - PrettyCircleView (0.1.1):
+  - PrettyCircleView (0.1.2):
     - PrettyExtensionsKit (~> 0.1)
   - PrettyExtensionsKit (0.1.9.2)
 
@@ -7,7 +7,7 @@ DEPENDENCIES:
   - PrettyCircleView
 
 SPEC CHECKSUMS:
-  PrettyCircleView: 773ee07dba696b7c2ac7e2d0235c72d7d78d88d6
+  PrettyCircleView: f89a59a1b14a25753c04c5cd89a8a362be6fa388
   PrettyExtensionsKit: c39bac980d1ebac74f116c410effc7fce1369b2a
 
 PODFILE CHECKSUM: 74cee918ee09ef75fd15635fa3a1b2adf1809f6d
