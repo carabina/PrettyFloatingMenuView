@@ -229,10 +229,6 @@ open class PrettyFloatingMenuView: PrettyCircleView {
             return
         }
         
-        //Disable touches on items
-        itemViews.forEach { (itemView) in
-            itemView.isUserInteractionEnabled = true
-        }
         
         animator.openMenuAnimation(itemViews, anchorPoint: anchorPoint)
     }
@@ -245,11 +241,6 @@ open class PrettyFloatingMenuView: PrettyCircleView {
         
         guard let animator = animator, let itemViews = itemViews else {
             return
-        }
-
-        //Enable touches on items
-        itemViews.forEach { (itemView) in
-            itemView.isUserInteractionEnabled = false
         }
         
         animator.closeMenuAnimation(itemViews, anchorPoint: anchorPoint)

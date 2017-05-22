@@ -35,6 +35,8 @@ open class PrettyFloatingMenuSlideUpAnimator: PrettyFloatingMenuAnimator {
             UIView.animate(withDuration: 0.3, delay: delay, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: UIViewAnimationOptions(), animations: { () -> Void in
                 itemView.alpha = 1
                 itemView.layer.transform = CATransform3DIdentity
+            }, completion: { (_) in
+                itemView.isUserInteractionEnabled = true
             })
             
             delay += animationSpeed
@@ -50,6 +52,7 @@ open class PrettyFloatingMenuSlideUpAnimator: PrettyFloatingMenuAnimator {
                 itemView.alpha = 0
             }, completion: { (_) in
                 itemView.center = anchorPoint
+                itemView.isUserInteractionEnabled = true
             })
             
             delay += animationSpeed

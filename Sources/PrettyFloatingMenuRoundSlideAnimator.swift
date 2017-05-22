@@ -11,7 +11,7 @@ open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
     // MARK: - Public Properties
     open var radius: CGFloat = 120
 
-    open var animationSpeed: Double = 0.1
+    open var animationSpeed: Double = 0.05
     
     // MARK: - Initializers
     public init() { }
@@ -22,24 +22,17 @@ open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
         var delay: TimeInterval = 0
 
         itemViews.enumerated().forEach { (index, itemView) in
-            itemView.layer.transform = CATransform3DIdentity
-            
-            let itemSize = itemView.frame.size
-
-            
             degree = degreesToRadians(180 + (90.0 / CGFloat(itemViews.count - 1)) * CGFloat(index))
             
-            
+            let itemSize = itemView.frame.size
             itemView.frame.origin.x = radius * cos(degree) - itemSize.width + itemView.iconSize / 2 + anchorPoint.x
             itemView.frame.origin.y = radius * sin(degree) - itemSize.height + itemView.iconSize / 2 + anchorPoint.y
-
-            itemView.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
             
-            UIView.animate(withDuration: 0.2, delay: delay, animations: { () -> Void in
+            UIView.animate(withDuration: 0.1, delay: delay, animations: { () -> Void in
                 itemView.alpha = 1
-                itemView.layer.transform = CATransform3DIdentity
+            }, completion: { (_) in
+                itemView.isUserInteractionEnabled = true
             })
-            
             delay += animationSpeed
         }
     }
@@ -48,11 +41,10 @@ open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
         var delay: TimeInterval = 0
         
         itemViews.reversed().forEach { (itemView) in
-            UIView.animate(withDuration: 0.15, delay: delay, animations: { () -> Void in
-                itemView.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
+            UIView.animate(withDuration: 0.1, delay: delay, animations: { () -> Void in
                 itemView.alpha = 0
             }, completion: { (_) in
-                itemView.center = anchorPoint
+                itemView.isUserInteractionEnabled = false
             })
             
             delay += animationSpeed
