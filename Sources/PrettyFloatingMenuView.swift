@@ -32,6 +32,8 @@ open class PrettyFloatingMenuView: PrettyCircleView {
 
     open var animator: PrettyFloatingMenuAnimator? = nil
     
+    open var delegate: PrettyFloatingMenuViewDelegate? = nil
+    
     open private(set) var state: PrettyFloatingMenuState = .closed
     
     // MARK: - Private Properties
@@ -229,7 +231,7 @@ open class PrettyFloatingMenuView: PrettyCircleView {
             return
         }
         
-        
+        delegate?.willShowItems(self)
         animator.openMenuAnimation(itemViews, anchorPoint: anchorPoint)
     }
     
@@ -243,6 +245,7 @@ open class PrettyFloatingMenuView: PrettyCircleView {
             return
         }
         
+        delegate?.willHideItems(self)
         animator.closeMenuAnimation(itemViews, anchorPoint: anchorPoint)
     }
 }

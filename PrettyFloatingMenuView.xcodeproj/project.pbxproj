@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1B15AE741EC4E096003B9521 /* PrettyFloatingMenuView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFB02391EC4DB6700C65173 /* PrettyFloatingMenuView.framework */; };
 		1B15AE751EC4E096003B9521 /* PrettyFloatingMenuView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BFB02391EC4DB6700C65173 /* PrettyFloatingMenuView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1B877BF51ED885D000CC42F6 /* PrettyFloatingMenuViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B877BF41ED885D000CC42F6 /* PrettyFloatingMenuViewDelegate.swift */; };
 		1B9EE21E1EC501AE0033B0A3 /* PrettyFloatingMenuAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9EE21D1EC501AE0033B0A3 /* PrettyFloatingMenuAnimator.swift */; };
 		1B9EE2201EC507EC0033B0A3 /* PrettyFloatingMenuSlideUpAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9EE21F1EC507EC0033B0A3 /* PrettyFloatingMenuSlideUpAnimator.swift */; };
 		1BFB02481EC4DBC600C65173 /* PrettyFloatingMenuView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BFB02461EC4DBC600C65173 /* PrettyFloatingMenuView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		19634C702F23B8742AC5154E /* Pods_PrettyFloatingMenuView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PrettyFloatingMenuView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		19B40AD5E6B196612D3EF03D /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		1B877BF41ED885D000CC42F6 /* PrettyFloatingMenuViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyFloatingMenuViewDelegate.swift; sourceTree = "<group>"; };
 		1B9EE21D1EC501AE0033B0A3 /* PrettyFloatingMenuAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyFloatingMenuAnimator.swift; sourceTree = "<group>"; };
 		1B9EE21F1EC507EC0033B0A3 /* PrettyFloatingMenuSlideUpAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettyFloatingMenuSlideUpAnimator.swift; sourceTree = "<group>"; };
 		1BFB02391EC4DB6700C65173 /* PrettyFloatingMenuView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrettyFloatingMenuView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +125,7 @@
 				1B9EE21D1EC501AE0033B0A3 /* PrettyFloatingMenuAnimator.swift */,
 				1B9EE21F1EC507EC0033B0A3 /* PrettyFloatingMenuSlideUpAnimator.swift */,
 				1BFF47471EC5E2D300D983E2 /* PrettyFloatingMenuRoundSlideAnimator.swift */,
+				1B877BF41ED885D000CC42F6 /* PrettyFloatingMenuViewDelegate.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				1B9EE21E1EC501AE0033B0A3 /* PrettyFloatingMenuAnimator.swift in Sources */,
 				1BFF47481EC5E2D300D983E2 /* PrettyFloatingMenuRoundSlideAnimator.swift in Sources */,
 				1BFB02641EC4DC6200C65173 /* PrettyFloatingMenuItemView.swift in Sources */,
+				1B877BF51ED885D000CC42F6 /* PrettyFloatingMenuViewDelegate.swift in Sources */,
 				1B9EE2201EC507EC0033B0A3 /* PrettyFloatingMenuSlideUpAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
