@@ -117,6 +117,11 @@ open class PrettyFloatingMenuView: PrettyCircleView {
                 
                 itemView.action?(itemView)
             })
+        } else if touchView == overlayView {
+            if state == .opened, closingAfterTapOnEmptySpace == true {
+                //Close menu after tap on overlay view
+                close()
+            }
         }
     }
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -146,9 +151,9 @@ open class PrettyFloatingMenuView: PrettyCircleView {
             }
         }
         
-        if state == .opened, closingAfterTapOnEmptySpace == true {
-            //Close menu after tap on empty space
-            close()
+        let pointOnOverlayView = overlayView.convert(point, from: self)
+        if overlayView.bounds.contains(pointOnOverlayView) {
+            return overlayView
         }
         
         return nil
