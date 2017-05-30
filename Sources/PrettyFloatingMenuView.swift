@@ -45,6 +45,8 @@ open class PrettyFloatingMenuView: PrettyCircleView {
     
     private var menuImages: [PrettyFloatingMenuState: UIImage?] = [:]
     
+    private var menuImageTintColors: [PrettyFloatingMenuState: UIColor?] = [:]
+    
     private var menuBackgroundColors: [PrettyFloatingMenuState: UIColor?] = [:]
 
     private var overlayColors: [PrettyFloatingMenuState: UIColor?] = [:]
@@ -124,9 +126,11 @@ open class PrettyFloatingMenuView: PrettyCircleView {
             }
         }
     }
+    
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchesCancelled(touches, with: event)
     }
+    
     open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first, touch.tapCount == 1, let touchView = touch.view else {
             return
@@ -166,6 +170,13 @@ open class PrettyFloatingMenuView: PrettyCircleView {
         updateMenuButtonImageView()
     }
     
+    open func setImageTintColor(_ color: UIColor?, forState state: PrettyFloatingMenuState) {
+        
+        menuImageTintColors[state] = color
+        
+        updateMenuButtonImageView()
+    }
+    
     open func setBackgroundColor(_ color: UIColor?, forState state: PrettyFloatingMenuState) {
         menuBackgroundColors[state] = color
         
@@ -184,7 +195,13 @@ open class PrettyFloatingMenuView: PrettyCircleView {
         clipsToBounds = false
         backgroundColor = UIColor.clear
         
-        contentImage = menuImages[state] ?? nil
+        var image = menuImages[state] ?? nil
+        
+        if let imageTintColor = menuImageTintColors[state] as? UIColor, image != nil {
+            image = image?.prettyMaskWithColor(color: imageTintColor)
+        }
+        
+        contentImage = image
         contentBackgroundColor = menuBackgroundColors[state] ?? nil
     }
     

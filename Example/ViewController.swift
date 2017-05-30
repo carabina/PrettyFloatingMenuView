@@ -63,6 +63,7 @@ class ViewController: UIViewController {
         menuView.itemViews = [firstItemView, secondItemView, thirdItemView, fourthItemView, fifthItemView]
         menuView.setImage(UIImage(named: "menu-icon"), forState: .closed)
         menuView.setImage(UIImage(named: "close-icon"), forState: .opened)
+        menuView.setImageTintColor(UIColor.red, forState: .opened)
         menuView.setBackgroundColor(UIColor.yellow, forState: .closed)
         menuView.setBackgroundColor(UIColor.blue, forState: .opened)
         menuView.setOverlayColor(UIColor.green.withAlphaComponent(0.5), forState: .opened)
