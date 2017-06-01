@@ -149,6 +149,10 @@ open class PrettyFloatingMenuView: PrettyCircleView {
         }
         
         for itemView in presentedItemViews {
+            guard itemView.isUserInteractionEnabled == true, itemView.isHidden == false, itemView.alpha > 0 else {
+                continue
+            }
+            
             let itemViewPoint = itemView.convert(point, from: self)
             if itemView.bounds.contains(itemViewPoint) {
                 return itemView
