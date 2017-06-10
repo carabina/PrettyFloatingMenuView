@@ -22,7 +22,11 @@ open class PrettyFloatingMenuRoundSlideAnimator: PrettyFloatingMenuAnimator {
         var delay: TimeInterval = 0
 
         itemViews.enumerated().forEach { (index, itemView) in
-            degree = degreesToRadians(180 + (90.0 / CGFloat(itemViews.count - 1)) * CGFloat(index))
+            if index == 0 {
+                degree = degreesToRadians(180)
+            } else {
+                degree = degreesToRadians(180 + (90.0 / CGFloat(itemViews.count - 1)) * CGFloat(index))
+            }
             
             let itemSize = itemView.frame.size
             itemView.frame.origin.x = radius * cos(degree) - itemSize.width + itemView.iconSize / 2 + anchorPoint.x
