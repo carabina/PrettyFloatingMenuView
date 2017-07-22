@@ -220,7 +220,7 @@ open class PrettyFloatingMenuView: PrettyCircleView {
                 return
             }
             
-            overlayView.frame = superview.convert(superview.frame, to: self)
+            overlayView.frame = superview.convert(superview.bounds, to: self)
         }
 
         overlayView.backgroundColor = overlayColors[state] ?? nil
