@@ -20,6 +20,17 @@ class ViewController: UIViewController {
         
         prepareMenuView()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // toggle test
+        menuView.toggle()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self] in
+            guard let this = self else { return }
+            this.menuView.toggle()
+        }
+    }
 
     // MARK: - Private Instance Methods
     private func prepareMenuView() {
