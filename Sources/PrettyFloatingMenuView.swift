@@ -193,6 +193,43 @@ open class PrettyFloatingMenuView: PrettyCircleView {
         updateOverlayView()
     }
     
+    open func toggle() {
+        switch state {
+        case .closed:
+            open()
+        case .opened:
+            close()
+        }
+    }
+    
+    open func open() {
+        state = .opened
+        
+        updateMenuButtonImageView()
+        updateOverlayView()
+        
+        guard let animator = animator, let itemViews = itemViews else {
+            return
+        }
+        
+        delegate?.willShowItems(self)
+        animator.openMenuAnimation(itemViews, anchorPoint: anchorPoint)
+    }
+    
+    open func close() {
+        state = .closed
+        
+        updateMenuButtonImageView()
+        updateOverlayView()
+        
+        guard let animator = animator, let itemViews = itemViews else {
+            return
+        }
+        
+        delegate?.willHideItems(self)
+        animator.closeMenuAnimation(itemViews, anchorPoint: anchorPoint)
+    }
+    
     
     // MARK: - Private Instance Methods
     private func updateMenuButtonImageView() {
@@ -238,40 +275,4 @@ open class PrettyFloatingMenuView: PrettyCircleView {
         })
     }
     
-    private func toggle() {
-        switch state {
-        case .closed:
-            open()
-        case .opened:
-            close()
-        }
-    }
-    
-    private func open() {
-        state = .opened
-        
-        updateMenuButtonImageView()
-        updateOverlayView()
-        
-        guard let animator = animator, let itemViews = itemViews else {
-            return
-        }
-        
-        delegate?.willShowItems(self)
-        animator.openMenuAnimation(itemViews, anchorPoint: anchorPoint)
-    }
-    
-    private func close() {
-        state = .closed
-        
-        updateMenuButtonImageView()
-        updateOverlayView()
-        
-        guard let animator = animator, let itemViews = itemViews else {
-            return
-        }
-        
-        delegate?.willHideItems(self)
-        animator.closeMenuAnimation(itemViews, anchorPoint: anchorPoint)
-    }
 }
