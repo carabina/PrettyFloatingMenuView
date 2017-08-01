@@ -276,7 +276,7 @@ open class PrettyFloatingMenuView: PrettyCircleView {
             self.addSubview(itemView)
         })
         
-        if let itemViews = itemViews, itemViews.count > 0 {
+        if let itemViews = itemViews, !itemViews.isEmpty {
             isHidden = false
         } else {
             isHidden = true
