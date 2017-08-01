@@ -203,6 +203,7 @@ open class PrettyFloatingMenuView: PrettyCircleView {
     }
     
     open func open() {
+        guard !isHidden else { return }
         state = .opened
         
         updateMenuButtonImageView()
@@ -217,6 +218,7 @@ open class PrettyFloatingMenuView: PrettyCircleView {
     }
     
     open func close() {
+        guard !isHidden else { return }
         state = .closed
         
         updateMenuButtonImageView()
@@ -273,6 +275,12 @@ open class PrettyFloatingMenuView: PrettyCircleView {
         itemViews?.forEach({ (itemView) in
             self.addSubview(itemView)
         })
+        
+        if let itemViews = itemViews, !itemViews.isEmpty {
+            isHidden = false
+        } else {
+            isHidden = true
+        }
     }
     
 }
