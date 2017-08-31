@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "PrettyFloatingMenuView"
-    s.version      = "0.1"
+    s.version      = "0.1.1"
     s.summary      = "A pretty example for multi buttons menu"
     s.description = <<-DESC
                     A pretty example for multi buttons menu written on swift
@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
     s.frameworks      = "UIKit", "CoreGraphics", "QuartzCore"
     s.requires_arc    = true
     s.dependency 'PrettyExtensionsKit', '~> 0.1'
-    s.dependency 'PrettyCircleView', '~> 0.1'
+    s.dependency 'PrettyCircleView', '0.1.2'
 end
